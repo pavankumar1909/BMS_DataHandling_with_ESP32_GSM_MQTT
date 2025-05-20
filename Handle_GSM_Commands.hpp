@@ -3,5 +3,6 @@
 
 
 void setup_sim(bool);
+void sendATCommand(String);
 
 #endif //Handle_GSM_Commands

@@ -1,6 +1,7 @@
 #include <HardwareSerial.h>
 #include "defines.hpp"
 #include "Handle_GSM_Commands.hpp"
+
 #define MODEM_TX 17  // ESP32 TX to MC60 RX
 #define MODEM_RX 16  // ESP32 RX to MC60 TX
 
