@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "gsm_uart.h"
+#include "defines.h"
 
 static const char *TAG = "GSM_UART";
 
@@ -27,8 +28,31 @@ void gsm_read_response() {
     uint8_t data[BUF_SIZE];
     int len = uart_read_bytes(GSM_UART_NUM, data, BUF_SIZE - 1, pdMS_TO_TICKS(1000));
     if (len > 0) {
+     data[len] = 0;
+     ESP_LOGI(TAG, "Received: %s", (char *)data);
+    } else {
+        ESP_LOGW(TAG, "No response from GSM module");
+    }
+}
+
+void gsm_imei_response(char *imei,const char* cmd,int cmd_len) {
+    uint8_t data[BUF_SIZE],count=0;
+    int len = uart_read_bytes(GSM_UART_NUM, data, BUF_SIZE - 1, pdMS_TO_TICKS(1000));
+    if (len > 0) {
         data[len] = 0;
-        ESP_LOGI(TAG, "Received: %s", (char *)data);
+        for(int i=cmd_len,j=0;i<len;i++,j++){
+            imei[j]=data[i];
+            if(data[i] == '\n'){
+                count++;
+                if(count == 2){
+                    imei[j] = 0; // Null-terminate the string
+                    ESP_LOGI(TAG, "IMEI: %s", imei);
+                    count=0;   break;
+                }
+            }
+        }
+        //imei[j] = 0;
+        memset(data, 0, BUF_SIZE);
     } else {
         ESP_LOGW(TAG, "No response from GSM module");
     }
