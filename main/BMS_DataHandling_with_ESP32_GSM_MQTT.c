@@ -1,7 +1,11 @@
 #include "includes.h"
-#include "gsm_uart.h"
+
 #include "defines.h"
 
+#include "gsm_uart.h"
+#include "wifi_connect.h"
+
+char MQTT_TOPIC[20];
 
 void app_main() {
     //char line[BUF_SIZE];
@@ -10,9 +14,14 @@ void app_main() {
      char cmd_response[100];
      gsm_send_cmd(GSM_AT_IMEI_CMD);  // get IMEI number
      if (gsm_extract_value_from_response(cmd_response, sizeof(cmd_response), 3000)) {
-        printf("IEMI value: %s\n", cmd_response);} 
+        printf("IEMI value: %s\n", cmd_response);
+        strcpy(MQTT_TOPIC, cmd_response);
+        printf("MQTT_TOPIC: %s\n", MQTT_TOPIC);
+    } 
      else{
         printf("Failed to extract value\n");}
+
+    wifi_init_sta();    
 
     //  gsm_send_cmd(GSM_AT_CMD);  // Test command
     //  gsm_read_response(cmd_response);

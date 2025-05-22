@@ -9,5 +9,15 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include<sys/time.h>
+#include "mqtt_client.h"
+
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
+#include "esp_event.h"
+#include "esp_wifi.h"
+#include "nvs_flash.h"
+#include "esp_netif.h"
+
 
 #endif // __INCLUDES_H
