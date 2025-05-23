@@ -1,11 +1,11 @@
-#include <HardwareSerial.h>
+#include "includes.hpp"
+
+
 #include "defines.hpp"
 #include "Handle_GSM_Commands.hpp"
 
-#define MODEM_TX 17  // ESP32 TX to MC60 RX
-#define MODEM_RX 16  // ESP32 RX to MC60 TX
 
-HardwareSerial GSM(1); // Use UART1
+
 
 void setup() {
   Serial.begin(115200);    // USB serial monitor
@@ -15,19 +15,42 @@ void setup() {
   GSM.begin(9600, SERIAL_8N1, MODEM_RX, MODEM_TX); // Start GSM UART
   delay(2000);
 
-  GSM.println("AT"); // Send test command
+  gsm_setup_sim(true);
+  
+}
 
-  setup_sim(HIGH);
+void clean_buffer(){
+    while (GSM.available()) {
+    GSM.read();
+  }
 }
 
 void loop() {
-  // Read data from MC60 and print to Serial Monitor
-  while (GSM.available()) {
-    Serial.write(GSM.read());
+   // gsm_setup_sim(true);
+   gsm_send_at_command(GSM_MC60_AT_IMEI_CMD);
+   char value[64];
+   memset(value,0,sizeof(value));
+   clean_buffer();
+   if (gsm_extract_value_from_response(value, sizeof(value), 3000)) {
+    Serial.print("Extracted Value: ");
+    Serial.println(value);
+  } else {
+    Serial.println("No value found");
   }
 
-  // Send input from Serial Monitor to GSM
-  while (Serial.available()) {
-    GSM.write(Serial.read());
-  }
+  delay(2000);  // Repeat after delay
+
 }
+
+
+//void loop() {
+//  // Read data from MC60 and print to Serial Monitor
+//  while (GSM.available()) {
+//    Serial.write(GSM.read());
+//  }
+//
+//  // Send input from Serial Monitor to GSM
+//  while (Serial.available()) {
+//    GSM.write(Serial.read());
+//  }
+//}

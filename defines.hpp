@@ -1,21 +1,26 @@
 #ifndef __DEFINES_HPP_
 #define __DEFINES_HPP_ 
  //AT COMMANDS
-#define AT_IEMI        "AT+GSN" 
 
-#define AT_CSQ         "AT+CSQ"
-#define AT_W           "AT&W"
-#define AT_CPIN        "AT+CPIN?"
-#define AT_CGREG       "AT+CGREG?"
-#define AT_QIMODE      "AT+QIMODE=0"
-#define AT_QICSGP      "AT+QICSGP=1,\"airteliot.com\""
-#define AT_QIREGAPP    "AT+QIREGAPP"
-#define AT_QICSGP      "AT+QICSGP?"
-#define AT_QIACT       "AT+QIACT"
-#define AT_QILOCIP     "AT+QILOCIP"
-#define AT_ATV1        "ATV1"
-#define AT_QIHEAD      "AT+QIHEAD=1"
-#define AT_QIMUX       "AT+QIMUX"
-#define AT_QIDNSIP     "AT+QIDNSIP=0"
-#define AT_TCP_CONNECT "AT+QIOPEN=1,\"TCP\",\"85.119.83.194\",1883"
+#define MODEM_TX 17  // ESP32 TX to MC60 RX
+#define MODEM_RX 16  // ESP32 RX to MC60 TX
+
+#define GSM_MC60_AT_CSQ         "AT+CSQ"
+#define GSM_MC60_AT_W           "AT&W"
+#define GSM_MC60_AT_CPIN        "AT+CPIN?"
+#define GSM_MC60_AT_CGREG       "AT+CGREG?"
+#define GSM_MC60_AT_QIMODE      "AT+QIMODE=0"
+#define GSM_MC60_AT_QICSGP      "AT+QICSGP=1,\"airteliot.com\""
+#define GSM_MC60_AT_QIREGAPP    "AT+QIREGAPP"
+#define GSM_MC60_AT_QICSGP      "AT+QICSGP?"
+#define GSM_MC60_AT_IMEI_CMD    "AT+CGSN"
+#define GSM_MC60_AT_QIACT       "AT+QIACT"
+#define GSM_MC60_AT_QILOCIP     "AT+QILOCIP"
+#define GSM_MC60_AT_ATV1        "ATV1"
+#define GSM_MC60_AT_QIHEAD      "AT+QIHEAD=1"
+#define GSM_MC60_AT_QIMUX       "AT+QIMUX"
+#define GSM_MC60_AT_QIDNSIP     "AT+QIDNSIP=0"
+#define GSM_MC60_AT_TCP_CONNECT "AT+QIOPEN=\"TCP\",\"85.119.83.194\",1883"
+
+
 #endif __DEFINES_HPP_
