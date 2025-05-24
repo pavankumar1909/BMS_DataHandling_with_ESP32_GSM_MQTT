@@ -4,7 +4,7 @@ void gsm_send_at_command(char *cmd)
 }
 
 bool gsm_extract_value_from_response(char *out_str, int out_len, int timeout_ms) {
-  char line[128];
+  char line[200];
   unsigned long total_time = 0;
   const unsigned long per_line_timeout = 500;
 
@@ -24,8 +24,11 @@ bool gsm_extract_value_from_response(char *out_str, int out_len, int timeout_ms)
         Serial.println(line);
       continue;
     }
-    Serial.println("here");
-    Serial.println(line);
+    
+    strcpy(out_str,line);
+    out_str[strlen(line)]='\0';
+//    Serial.println("here");
+//    Serial.println(line);
 //    // Case 1: Value inside double quotes
 //    char *start = strchr(line, '"');
 //    if (start) {
@@ -89,16 +92,24 @@ int gsm_read_line(char *buffer, int max_len, int timeout_ms) {
   buffer[index] = '\0';
   return index;
 }
-
+void clean_buffer(){
+    while (GSM.available()) {
+    GSM.read();
+  }
+}
 char value[500];
 void gsm_setup_sim(bool check)
 {
   if(check)
   {
-    //  print_cmd("AT+COPS=?",11000);
-    
+    clean_buffer();
     gsm_send_at_command("AT+COPS=?");
-    gsm_extract_value_from_response(value,sizeof(value),11000);  // Read data from MC60 and print to Serial Monitor
+    gsm_extract_value_from_response(value,sizeof(value),20000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+   // Serial.println("AT+COPS?");
+    clean_buffer();
+    gsm_send_at_command("AT+COPS?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
   }
   

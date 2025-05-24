@@ -18,11 +18,7 @@ void setup() {
   
 }
 
-void clean_buffer(){
-    while (GSM.available()) {
-    GSM.read();
-  }
-}
+
 
 void loop()
 {
@@ -32,6 +28,7 @@ void loop()
 
 //char val[200];
 //void loop() {
+ // gsm_setup_sim(true);
 //  gsm_send_at_command("AT+COPS=?");
 //  gsm_extract_value_from_response(val,sizeof(val),11000);
 //}
