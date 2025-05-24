@@ -1,6 +1,5 @@
 #include "includes.hpp"
 
-
 #include "defines.hpp"
 #include "Handle_GSM_Commands.hpp"
 
@@ -25,32 +24,14 @@ void clean_buffer(){
   }
 }
 
-void loop() {
-   // gsm_setup_sim(true);
-   gsm_send_at_command(GSM_MC60_AT_IMEI_CMD);
-   char value[64];
-   memset(value,0,sizeof(value));
-   clean_buffer();
-   if (gsm_extract_value_from_response(value, sizeof(value), 3000)) {
-    Serial.print("Extracted Value: ");
-    Serial.println(value);
-  } else {
-    Serial.println("No value found");
-  }
-
-  delay(2000);  // Repeat after delay
-
+void loop()
+{
+  Serial.println("in loop");
+  delay(500);
 }
 
-
+//char val[200];
 //void loop() {
-//  // Read data from MC60 and print to Serial Monitor
-//  while (GSM.available()) {
-//    Serial.write(GSM.read());
-//  }
-//
-//  // Send input from Serial Monitor to GSM
-//  while (Serial.available()) {
-//    GSM.write(Serial.read());
-//  }
+//  gsm_send_at_command("AT+COPS=?");
+//  gsm_extract_value_from_response(val,sizeof(val),11000);
 //}
