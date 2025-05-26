@@ -48,6 +48,29 @@
    #define GSM_MC60_AT_QLOCKF_READ  "AT+QLOCKF?"
    #define GSM_MC60_AT_QLOCKF_WRITE "AT+QLOCKF=2,2,1024"
 
+/***GPRS Commands***/
+//1. Attach to/Detach from GPRS Service
+   #define GSM_MC60_AT_CGATT_TEST  "AT+CGATT=?"      
+   #define GSM_MC60_AT_CGATT_READ  "AT+CGATT?"   
+   // 1 for Attach and 0 for Dettach to GPRS service
+   #define GSM_MC60_AT_CGATT_WRITE "AT+CGATT=1"  
+//2.Define PDP Context
+   #define GSM_MC60_AT_CGDCONT_TEST  "AT+CGDCONT=?"      
+   #define GSM_MC60_AT_CGDCONT_READ  "AT+CGDCONT?"
+   //r
+   #define GSM_MC60_AT_CGDCONT_WRITE  "AT+CGDCONT=1,\"IP\",\"airteliot.com\""
+//3.Quality of Service Profile (Requested)
+   #define GSM_MC60_AT_CGQREQ_TEST  "AT+CGQREQ=?"      
+   #define GSM_MC60_AT_CGQREQ_READ  "AT+CGQREQ?"
+   #define GSM_MC60_AT_CGQREQ_WRITE "AT+CGQREQ=3,0,0,3,0,0"
+//4.Quality of Service Profile (Minimum Acceptable)
+   #define GSM_MC60_AT_CGQMIN_TEST  "AT+CGQMIN=?"      
+   #define GSM_MC60_AT_CGQMIN_READ  "AT+CGQMIN?"
+   #define GSM_MC60_AT_CGQMIN_WRITE "AT+CGQMIN=3,0,0,0,0,0"  
+//5.PDP Context Activate or Deactivate
+   #define GSM_MC60_AT_CGACT_TEST  "AT+CGACT=?"      
+   #define GSM_MC60_AT_CGACT_READ  "AT+CGACT?"
+   #define GSM_MC60_AT_CGACT_WRITE "AT+CGACT=1,1"
    
 #define GSM_MC60_AT_IFC         "AT+IFC=2,2"
 #define GSM_MC60_AT_CSQ         "AT+CSQ"

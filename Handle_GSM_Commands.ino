@@ -100,17 +100,159 @@ void clean_buffer(){
 char value[500];
 void gsm_setup_sim(bool check)
 {
+    //AT+CFUN=1         // Full functionality
+    //AT+CPIN?          // Ensure SIM is ready
+    //AT+CSQ            // Check signal strength
+    //AT+CGREG?         // Ensure registered
+   
   if(check)
   {
     clean_buffer();
-    gsm_send_at_command("AT+COPS=?");
-    gsm_extract_value_from_response(value,sizeof(value),20000);  // Read data from MC60 and print to Serial Monitor
+    gsm_send_at_command("AT+CFUN=1");
+    gsm_extract_value_from_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
-   // Serial.println("AT+COPS?");
+
     clean_buffer();
-    gsm_send_at_command("AT+COPS?");
+    gsm_send_at_command("AT+CPIN?");
+    gsm_extract_value_from_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    
+    clean_buffer();
+    gsm_send_at_command("AT+CSQ");
+    gsm_extract_value_from_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+CGREG?");
     gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
+
+    clean_buffer();
+    gsm_send_at_command("AT+CGREG=1");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+   // Serial.println("AT+COPS?");
+
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+CGDCONT?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    
+//    clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+CGDCONT=1,\"IP\",\"airteliot.com\"");
+//    gsm_extract_value_from_response(value,sizeof(value),7000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//
+  
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+CGPADDR=1");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIOPEN=?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    delay(2000);
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIFGCNT=0");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QICSGP?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QICSGP=1,\"airteliot.com\",\"pavan\",\"kumar\"");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIMODE=0");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIMUX?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIMUX=0");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QISRVC=1");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIREGAPP?");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIREGAPP=\"airteliot.com\",\"pavan\",\"kumar\"");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value); 
+
+      clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIACT");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);   //AT+CGPADDR=<cid>
+       
+       clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QINDI=2");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+      clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QILOCIP");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+      clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QMTOPEN=0,\"test.mosquitto.org\",1883");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+     clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QMTCONN=0,\"client123\"");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+     clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QMTPUB=0,0,0,\"pavandevice/progress\"");
+    gsm_extract_value_from_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("Hello from Quectel module!");
+
+    GSM.write(0x1A);
+
+    Serial.println("Published message.");
+    
+
+    
   }
   
 }
