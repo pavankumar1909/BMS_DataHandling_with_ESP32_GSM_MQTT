@@ -22,8 +22,8 @@ void setup() {
 
 void loop()
 {
-  Serial.println("in loop");
-  delay(500);
+//  Serial.println("in loop");
+//  delay(500);
 }
 
 //char val[200];
