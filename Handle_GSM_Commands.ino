@@ -103,9 +103,10 @@ void read_response(char *buffer, int max_len,int timeout_ms)
     if (GSM.available()) {
       char c = GSM.read();
         buffer[index++] = c;
+        //Serial.print(buffer[index]);
     }
   }
-
+  
   buffer[index] = '\0';
 }
 void clean_buffer(){
@@ -180,7 +181,7 @@ bool mqttConnect(const char* clientID) {
   Serial.println("Sending MQTT CONNECT packet...");
 
   GSM.println("AT+QISEND");
-  delay(500);
+  delay(1000);
 
 //  if (!GSM.find(">")) {
 //    Serial.println("No prompt after AT+QISEND");
@@ -451,25 +452,68 @@ void gsm_setup_sim(bool check)
     read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
     
+//     clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QIOPEN=\"TCP\",\"test.mosquitto.org\",1883");
+//    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+
+//    clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QIOPEN=\"TCP\",\"sytiqhub.in\",1883");
+//    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+    
+
      clean_buffer();
     memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QIOPEN=\"TCP\",\"test.mosquitto.org\",1883");
-    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
+    gsm_send_at_command("AT+QMTOPEN=0,\"sytiqhub.in\",1883");
+    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
 
-   
-   // Send MQTT CONNECT packet
-  bool connected = mqttConnect("client123");
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QMTCONN=0,\"pavankumar\",\"test1\",\"Aabbccdd@1234\"");
+    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
 
-  if (connected) {
-    Serial.println("MQTT CONNECT sent");
-  } else {
-    Serial.println("Failed to send MQTT CONNECT");
-  }
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QMTPUB=0,0,0,0,\"pavandevice/progress\"");
+    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+    delay(5000);
+
+    
+    gsm_send_at_command("pavankumar");
+    //read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//    Serial.println(value);
+     GSM.write(value,sizeof(value));
+    GSM.write(0x1A);
+//    while(GSM.available()) 
+//    {
+//    Serial.write(GSM.read());
+//    }
+
+  
+    
+    
+//    // Send MQTT CONNECT packet
+//    bool connected = mqttConnect("client123");
+//    
+//    if (connected) {
+//     Serial.println("MQTT CONNECT sent");
+//     } else {
+//     Serial.println("Failed to send MQTT CONNECT");
+//  }
 }
-delay(1000);
 
-  mqttPublish("pavandevice/progress", "Hello from MC60!");
+  
+//    mqtt_connect("pavankumar","test1","Aabbccdd@1234");
+//    delay(1000);
+//    send_publish_packet("pavandevice/progress", "Hello from MC60!");
+//  mqttPublish
 }
 
   
