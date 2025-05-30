@@ -5,7 +5,8 @@ void gsm_send_at_command(char *cmd)
   GSM.println(cmd);
 }
 
-bool gsm_extract_value_from_response(char *out_str, int out_len, int timeout_ms) {
+bool gsm_extract_value_from_response(char *out_str, int out_len, int timeout_ms) 
+{
   char line[200];
   unsigned long total_time = 0;
   const unsigned long per_line_timeout = 500;
@@ -300,6 +301,12 @@ void gsm_setup_sim(bool check)
     gsm_send_at_command("AT+QIDEACT");
     read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
+
+     clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+CMEE=2");
+    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
     
     clean_buffer();
     gsm_send_at_command("AT+CFUN=1");
@@ -326,82 +333,18 @@ void gsm_setup_sim(bool check)
     gsm_send_at_command("AT+CGREG=1");
     read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
-   // Serial.println("AT+COPS?");
-//
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+CGDCONT?");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//    
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+CGDCONT=1,\"IP\",\"airteliot.com\"");
-//    gsm_extract_value_from_response(value,sizeof(value),7000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//
-//  
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+CGPADDR=1");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//
-//    
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIFGCNT=0");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-//
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QICSGP?");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QICSGP=1,\"airteliot.com\",\"pavan\",\"kumar\"");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-//
-//    clean_buffer();
-//    gsm_send_at_command("AT+CGACT=1,1");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//    
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIMODE=0");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIMUX?");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-//    clean_buffer();
+ 
     memset(value,0,sizeof(value));
     gsm_send_at_command("AT+QIMUX=0");
     read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value); 
+    Serial.println(value);
+     
     clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QISRVC=1");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-//    clean_buffer();
     memset(value,0,sizeof(value));
     gsm_send_at_command("AT+QICSGP=1,\"airteliot.com\"");
     read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
     Serial.println(value);
     
-//    clean_buffer();
-//    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIREGAPP=\"airteliot.com\",\"pavan\",\"kumar\"");
-//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value); 
-
     clean_buffer();
     memset(value,0,sizeof(value));
     gsm_send_at_command("AT+QIREGAPP");
@@ -422,7 +365,7 @@ void gsm_setup_sim(bool check)
        
 //     clean_buffer();
 //    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIACT=?");
+//    gsm_send_at_command("AT+QIACT?");
 //    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
 //    Serial.println(value);
 
@@ -458,64 +401,69 @@ void gsm_setup_sim(bool check)
 //    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
 //    Serial.println(value);
 
+    clean_buffer();
+    memset(value,0,sizeof(value));
+    gsm_send_at_command("AT+QIOPEN=\"TCP\",\"sytiqhub.in\",1883");
+    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
+    Serial.println(value);
+
+    
+//
+//     clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QMTOPEN=0,\"sytiqhub.in\",1883");
+//    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//
+//     clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QISTAT=0");
+//    read_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//    
 //    clean_buffer();
 //    memset(value,0,sizeof(value));
-//    gsm_send_at_command("AT+QIOPEN=\"TCP\",\"sytiqhub.in\",1883");
-//    read_response(value,sizeof(value),10000);  // Read data from MC60 and print to Serial Monitor
+//    gsm_send_at_command("AT+QMTCONN=0,\"pavankumar\",\"test1\",\"Aabbccdd@1234\"");
+//    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
 //    Serial.println(value);
-    
-
-     clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTOPEN=0,\"sytiqhub.in\",1883");
-    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-
-    clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTCONN=0,\"pavankumar\",\"test1\",\"Aabbccdd@1234\"");
-    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-
-    clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTPUB=0,0,0,0,\"pavandevice/progress\"");
-    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-    delay(5000);
-
-    
-    gsm_send_at_command("pavankumar");
-    //read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-//    Serial.println(value);
-//    Serial.println(value);
-     GSM.write(value,sizeof(value));
-    GSM.write(0x1A);
-//    while(GSM.available()) 
-//    {
-//    Serial.write(GSM.read());
-//    }
-
-  
-    
-    
-//    // Send MQTT CONNECT packet
-//    bool connected = mqttConnect("client123");
+//
 //    
-//    if (connected) {
-//     Serial.println("MQTT CONNECT sent");
-//     } else {
-//     Serial.println("Failed to send MQTT CONNECT");
-//  }
+//    clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QMTPUB=0,0,0,0,\"pavandevice/progress\"");
+    
+    
+//    delay(1000);
+//    
+//    
+//    publish_msg("pavankumar");
+//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+  
+  
 }
 
   
-//    mqtt_connect("pavankumar","test1","Aabbccdd@1234");
-//    delay(1000);
-//    send_publish_packet("pavandevice/progress", "Hello from MC60!");
+    mqtt_connect("pavankumar","test1","Aabbccdd@1234");
+    delay(1000);
+    send_publish_packet("pavandevice/progress", "AT+COMMANDS from MC60!");
 //  mqttPublish
 }
 
-  
+void publish_msg(char *msg)
+{
+    Serial.println("Sending MQTT publish..");
+    // Send MQTT CONNECT packet over TCP
+    GSM.write(msg,10);
+    delay(500);
+    GSM.write(0x1A); // Ctrl+Z to end
+    delay(500);
+
+     // Optional: Wait for server response
+    while(GSM.available()) 
+    {
+    Serial.write(GSM.read());
+    }
+}
 
  

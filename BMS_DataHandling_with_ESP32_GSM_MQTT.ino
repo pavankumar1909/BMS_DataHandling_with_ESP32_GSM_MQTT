@@ -25,10 +25,3 @@ void loop()
 //  Serial.println("in loop");
 //  delay(500);
 }
-
-//char val[200];
-//void loop() {
- // gsm_setup_sim(true);
-//  gsm_send_at_command("AT+COPS=?");
-//  gsm_extract_value_from_response(val,sizeof(val),11000);
-//}

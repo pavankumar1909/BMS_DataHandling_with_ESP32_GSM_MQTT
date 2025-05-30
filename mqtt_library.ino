@@ -161,8 +161,8 @@ void send_publish_packet(const char *topic_name,const char *message)
       
     int total_packet_length= RL +2;   //2 for fixed header
 
-    char buffer[total_packet_length]; 
-    char Fixed_header[]={
+    unsigned char buffer[total_packet_length]; 
+    unsigned char Fixed_header[]={
                            0x30,    //control packet type
                            RL      //Remaining length of packet    
                         };
@@ -170,7 +170,7 @@ void send_publish_packet(const char *topic_name,const char *message)
      int buffer_index=0;
   
      //storing Fixed header into buffer  
-     while(buffer_index<sizeof(Fixed_header))
+     while(buffer_index<sizeof(Fixed_header)/sizeof(unsigned char))
      {
        buffer[buffer_index]=Fixed_header[buffer_index];
        buffer_index++;
