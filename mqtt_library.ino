@@ -148,6 +148,47 @@ bool mqtt_connect(const char *client_id)
     return 1;
 }
 
+void send_subcribe_packet(const char *topic_name)
+{
+  int topic_name_length = strlen(topic_name);
+  int RL = 5 + topic_name_length;  
+      
+  int total_packet_length= RL +2;   //2 for fixed header
+
+  char buffer[total_packet_length];
+    
+  int i=0;
+  buffer[i++] = 0x82;
+  buffer[i++] = RL ;
+  buffer[i++] = 0x00;
+  buffer[i++] = 0x0a;
+  buffer[i++] = 0x00;
+  buffer[i++] = topic_name_length;
+  int j=0;
+  while(topic_name_length!=0)
+  {
+     buffer[i++]= topic_name[j];
+     j++;
+     topic_name_length--;
+  }
+  buffer[i]=0x01;
+   Serial.println("Sending MQTT SUBSCRIBE..");
+
+    GSM.println("AT+QISEND\r\n");
+    delay(1000);
+    // Send MQTT CONNECT packet over TCP
+    GSM.write(buffer,sizeof(buffer));
+    GSM.write(0x1A); // Ctrl+Z to end
+    delay(1000);
+
+    // Optional: Wait for server response
+    while(GSM.available()) 
+    {
+    Serial.write(GSM.read());
+    }
+
+}
+
 void send_publish_packet(const char *topic_name,const char *message)
 {
     

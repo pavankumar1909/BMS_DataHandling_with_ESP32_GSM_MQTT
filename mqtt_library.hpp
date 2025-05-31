@@ -4,5 +4,5 @@
 bool mqtt_connect(char *,char *,char*,char*);
 bool mqtt_connect(char *);
 void send_publish_packet(const char *topic_name,const char *message);
-
+void send_subcribe_packet(const char *topic_name);
 #endif __MQTT_LIBRARY_HPP__

@@ -409,45 +409,46 @@ void gsm_setup_sim(bool check)
 
     
 
-     clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTOPEN=0,\"sytiqhub.in\",1883");
-    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-
-     clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QISTAT=0");
-    read_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-    
-    clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTCONN=0,\"pavankumar\",\"test1\",\"Aabbccdd@1234\"");
-    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
-
-    
-    clean_buffer();
-    memset(value,0,sizeof(value));
-    gsm_send_at_command("AT+QMTPUB=0,0,0,0,\"pavandevice/progress\"");
+//     clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QMTOPEN=0,\"sytiqhub.in\",1883");
+//    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//
+//     clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QISTAT=0");
+//    read_response(value,sizeof(value),1000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//    
+//    clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QMTCONN=0,\"pavankumar\",\"test1\",\"Aabbccdd@1234\"");
+//    read_response(value,sizeof(value),5000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
+//
+//    
+//    clean_buffer();
+//    memset(value,0,sizeof(value));
+//    gsm_send_at_command("AT+QMTPUB=0,0,0,0,\"pavandevice/progress\"");
+////    
+////    
+//    delay(1000);
 //    
 //    
-    delay(1000);
-    
-    
-    publish_msg("pavankumar");
-    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
-    Serial.println(value);
+//    publish_msg("pavankumar");
+//    read_response(value,sizeof(value),2000);  // Read data from MC60 and print to Serial Monitor
+//    Serial.println(value);
   
   
 }
 
   
-//    mqtt_connect("pavankumar","test1","Aabbccdd@1234");
-//    delay(1000);
-//    send_publish_packet("pavandevice/progress", "AT+COMMANDS from MC60!");
-//  mqttPublish
+    mqtt_connect("pavankumar","test1","Aabbccdd@1234");
+    delay(1000);
+    send_publish_packet("pavandevice/progress", "AT+COMMANDS from MC60!");
+    delay(1000);
+    send_subcribe_packet("pavandevice/progress");
 }
 
 void publish_msg(char *msg)
